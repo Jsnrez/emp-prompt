@@ -3,28 +3,26 @@ import { ref, computed } from 'vue';
 import SlidePreview from './SlidePreview.vue';
 import SidebarEditor from './SidebarEditor.vue';
 import SimButton from './SimButton.vue'
+import { usePresentationStore } from '../stores/presentationStore.js'
+import SlideSelectorBelt from './SlideSelectorBelt.vue'
 
-const slideElements = ref([
-  {
-    id: '1', type: 'text', content: '# Click me to \n\nedit.',
-    x: 50, y: 50, width: 300, height: 100
-  },
-  {
-    id: '2', type: 'image', src: 'https://placehold.co/600x400',
-    x: 400, y: 200, width: 300, height: 150
-  }
-]);
+//Store for managing entire presentation
+const store = usePresentationStore();
+// Which element is being edited / moved
 const selectedElementId = ref(null);
 
 /**
  *  Computed Properties
  */
 const selectedElement = computed(() => {
-  return slideElements.value.find(el => el.id === selectedElementId.value) || null;
+  if (!selectedElementId.value) return null;
+  return currentSlideElements.value.find(el => el.id === selectedElementId.value) || null;
 });
 
+const currentSlideElements = computed(() => store.currentSlideElements);
+
 /**
- * Methods
+ * Element Method Handlers
  */
 function handleSelectElement(elementId) {
   selectedElementId.value = elementId;
@@ -33,55 +31,41 @@ function handleSelectElement(elementId) {
  * Handles updates from sidebar and dragging via x/y coordinates
  */
 function handleUpdateElement(updatePayload) {
-  const elementIndex = slideElements.value.findIndex(el => el.id === updatePayload.id);
-  if (elementIndex !== -1) {
-    const payload = { ...updatePayload };
-    if (payload.x !== undefined) payload.x = Math.round(payload.x);
-    if (payload.y !== undefined) payload.y = Math.round(payload.y);
-
-    // Assign values
-    slideElements.value[elementIndex] = {
-      ...slideElements.value[elementIndex],
-      ...payload
-    };
-  }
+  store.updateElement(updatePayload);
 }
 
 function handleDeleteElement(elementId) {
-    slideElements.value = slideElements.value.filter(el => el.id !== elementId);
-    // Unselect Deleted Element
-    if (selectedElementId.value === elementId) {
-        selectedElementId.value = null;
-    }
-}
-function addTextElement() {
-    const date = new Date();
-    const newTextElement = {
-        id: date.toISOString(),
-        type: 'text',
-        content: 'New Text Block',
-        x: 20,
-        y: 20,
-        width: 200,
-        height: 50
-    };
-    slideElements.value.push(newTextElement);
-    selectedElementId.value = newTextElement.id;
+  store.deleteElement(elementId); // Delete in Store First
+  if (selectedElementId.value === elementId) {
+    selectedElementId.value = null;
+  }
 }
 
-function addImageElement() {
-  const date = new Date();
-    const newImageElement = {
-        id: date.toISOString(),
-        type: 'image',
-        src: 'https://placehold.co/600x400',
-        x: 50,
-        y: 40,
-        width: 150,
-        height: 150
-    };
-    slideElements.value.push(newImageElement);
-    selectedElementId.value = newImageElement.id;
+function handleAddElement(typeS) {
+  const newElementId = store.addElement(typeS);
+  if (newElementId) {
+    selectedElementId.value = newElementId; // Update local selection
+  }
+}
+/**
+ * Slide Method Handlers
+ */
+
+function handleSelectSlide(slideId) {
+  store.setCurrentSlide(slideId);
+  selectedElementId.value = null; // Unselect element
+}
+
+function handleCreateNewSlide() {
+  store.addSlide();
+  selectedElementId.value = null;
+}
+
+function handleRemoveSlide(slideId) {
+  if (confirm('Are you sure you want to delete this slide?')) {
+    store.deleteSlide(slideId);
+    selectedElementId.value = null;
+  }
 }
 
 </script>
@@ -89,15 +73,21 @@ function addImageElement() {
 <template>
   <div class="editor-layout">
     <div class="toolbar p-2">
-      <SimButton @click="addTextElement">Add Text</SimButton>
-      <SimButton @click="addImageElement">Add Image</SimButton>
+      <SimButton @click="handleCreateNewSlide">Add Slide</SimButton>
+      <SimButton @click="handleAddElement('text')">Add Text</SimButton>
+      <SimButton @click="handleAddElement('image')">Add Image</SimButton>
     </div>
     <div class="main-area">
-      <SlidePreview :slide-elements="slideElements" :selected-element-id="selectedElementId"
+      <SlidePreview :slide-elements="currentSlideElements" :selected-element-id="selectedElementId"
         @select-element="handleSelectElement" @update-element-position="handleUpdateElement" />
+
       <SidebarEditor :selected-element="selectedElement" @update-element="handleUpdateElement"
         @delete-element="handleDeleteElement" />
+
     </div>
+    <!-- <div>
+      <SlideSelectorBelt :slides="store.slides"></SlideSelectorBelt>
+    </div> -->
   </div>
 </template>
 
@@ -105,7 +95,6 @@ function addImageElement() {
 .editor-layout {
   display: grid;
   grid-template-rows: auto 1fr;
-  height: 100vh;
   overflow: hidden;
 }
 
@@ -118,5 +107,4 @@ function addImageElement() {
   margin-right: 10px;
   padding: 5px 10px;
 }
-
 </style>
