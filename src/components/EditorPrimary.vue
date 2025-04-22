@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, provide } from 'vue';
 import SlidePreview from './SlidePreview.vue';
 import SidebarEditor from './SidebarEditor.vue';
 import SimButton from './SimButton.vue'
@@ -52,9 +52,10 @@ function handleAddElement(typeS) {
  */
 
 function handleSelectSlide(slideId) {
-  store.setCurrentSlide(slideId);
+  store.currentSlideId = slideId;
   selectedElementId.value = null; // Unselect element
 }
+provide('editorSetSlide', handleSelectSlide)
 
 function handleCreateNewSlide() {
   store.addSlide();
@@ -85,9 +86,7 @@ function handleRemoveSlide(slideId) {
         @delete-element="handleDeleteElement" />
 
     </div>
-    <!-- <div>
-      <SlideSelectorBelt :slides="store.slides"></SlideSelectorBelt>
-    </div> -->
+    <SlideSelectorBelt :slides="store.slides"></SlideSelectorBelt>
   </div>
 </template>
 

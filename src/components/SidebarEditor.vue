@@ -37,23 +37,19 @@ function deleteElement() {
 <template>
   <div class="sidebar-editor">
     <div v-if="selectedElement">
-      <p>Editing Element ID: {{ selectedElement.id }} (Type: {{ selectedElement.type }})</p>
+      <span class="w-full capitalize">{{ selectedElement.type }} Editor</span>
 
       <div class="form-field">
-        <label>Position X:</label>
-        <input type="number" :value="selectedElement.x" @input="updateElement('x', $event.target.value)" /> px
+        <label>Position</label>
+        X: <input type="number" :value="selectedElement.x" @input="updateElement('x', $event.target.value)" />
+        Y: <input type="number" :value="selectedElement.y" @input="updateElement('y', $event.target.value)" />
       </div>
       <div class="form-field">
-        <label>Position Y:</label>
-        <input type="number" :value="selectedElement.y" @input="updateElement('y', $event.target.value)" /> px
-      </div>
-      <div class="form-field">
-        <label>Width:</label>
-        <input type="number" :value="selectedElement.width" @input="updateElement('width', $event.target.value)" /> px
-      </div>
-      <div class="form-field">
-        <label>Height:</label>
-        <input type="number" :value="selectedElement.height" @input="updateElement('height', $event.target.value)" /> px
+        <label>Dimensions</label>
+        W: <input type="number" :value="selectedElement.width" @input="updateElement('width', $event.target.value)" />
+        <template v-if="selectedElement.type === 'image'" >
+          H: <input type="number" :value="selectedElement.height" @input="updateElement('height', $event.target.value)" />
+        </template>
       </div>
 
       <hr />
@@ -65,7 +61,7 @@ function deleteElement() {
       </div>
 
       <div v-if="selectedElement.type === 'image'">
-        <div class="form-field">
+        <div class="form-field w-full" id="image-url">
           <label>Image URL:</label>
           <input type="text" :value="selectedElement.src" @input="updateElement('src', $event.target.value)" />
         </div>
@@ -88,6 +84,9 @@ function deleteElement() {
   border-left: 1px solid #ccc;
   min-width: 250px;
   background-color: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .form-field {
@@ -96,21 +95,29 @@ function deleteElement() {
 
 .form-field label {
   display: block;
-  margin-bottom: 3px;
   font-weight: bold;
 }
 
 .form-field input[type="number"],
 .form-field input[type="text"],
 .form-field textarea {
-  width: 95%;
+  max-width: 4em;
+  text-align: center;
   padding: .4em;
   border: 1px solid #a9a9a9;
   border-radius: 3px;
 }
 
+#image-url input[type="text"] {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 textarea {
   width: 95%;
   padding: .4em;
+  resize: none;
+  border: 1px solid #a9a9a9;
+  border-radius: 3px;
 }
 </style>
