@@ -3,6 +3,7 @@ import { ref, computed, provide } from 'vue';
 import SlidePreview from './SlidePreview.vue';
 import SidebarEditor from './SidebarEditor.vue';
 import SimButton from './SimButton.vue'
+import EditorToolbar from './EditorToolbar.vue';
 import { usePresentationStore } from '../stores/presentationStore.js'
 import SlideSelectorBelt from './SlideSelectorBelt.vue'
 
@@ -33,6 +34,7 @@ function handleSelectElement(elementId) {
 function handleUpdateElement(updatePayload) {
   store.updateElement(updatePayload);
 }
+provide('editorUpdateElement', handleUpdateElement)
 
 function handleDeleteElement(elementId) {
   store.deleteElement(elementId); // Delete in Store First
@@ -40,6 +42,7 @@ function handleDeleteElement(elementId) {
     selectedElementId.value = null;
   }
 }
+provide('editorDeleteElement', handleDeleteElement)
 
 function handleAddElement(typeS) {
   const newElementId = store.addElement(typeS);
@@ -47,6 +50,8 @@ function handleAddElement(typeS) {
     selectedElementId.value = newElementId; // Update local selection
   }
 }
+
+provide('editorAddElement', handleAddElement)
 /**
  * Slide Method Handlers
  */
@@ -61,6 +66,8 @@ function handleCreateNewSlide() {
   store.addSlide();
   selectedElementId.value = null;
 }
+provide('editorCreateSlide', handleCreateNewSlide)
+
 
 function handleRemoveSlide(slideId) {
   if (confirm('Are you sure you want to delete this slide?')) {
@@ -68,16 +75,13 @@ function handleRemoveSlide(slideId) {
     selectedElementId.value = null;
   }
 }
+provide('editorRemoveSlide', handleRemoveSlide)
 
 </script>
 
 <template>
   <div class="editor-layout">
-    <div class="toolbar p-2">
-      <SimButton @click="handleCreateNewSlide">Add Slide</SimButton>
-      <SimButton @click="handleAddElement('text')">Add Text</SimButton>
-      <SimButton @click="handleAddElement('image')">Add Image</SimButton>
-    </div>
+    <EditorToolbar></EditorToolbar>
     <div class="main-area">
       <SlidePreview :slide-elements="currentSlideElements" :selected-element-id="selectedElementId"
         @select-element="handleSelectElement" @update-element-position="handleUpdateElement" />
@@ -95,15 +99,5 @@ function handleRemoveSlide(slideId) {
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
-}
-
-.toolbar {
-  border-bottom: 1px solid #ccc;
-  background-color: #f0f0f0;
-}
-
-.toolbar button {
-  margin-right: 10px;
-  padding: 5px 10px;
 }
 </style>
