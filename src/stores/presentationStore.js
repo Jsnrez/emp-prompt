@@ -166,6 +166,34 @@ export const usePresentationStore = defineStore("presentation", () => {
     currentSlideId.value = null;
   }
 
+  function savePresentation(fileName) {
+    try {
+      const jsonString = JSON.stringify(slides.value, null, 2);
+      const blob = new Blob([jsonString], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+
+      a.href = url;
+      console.log(fileName)
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      /// Clean up
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      console.log("Presentation saved successfully as", fileName);
+    } catch (error) {
+      console.error("Error saving presentation:", error);
+      alert("Error saving presentation");
+      
+    }
+  }
+
+  function loadPresentation(file) {
+    //JSON
+    console.log(file);
+  }
+
   return {
     addSlide,
     currentSlide,
@@ -176,5 +204,7 @@ export const usePresentationStore = defineStore("presentation", () => {
     deleteElement,
     slides,
     deleteSlide,
+    savePresentation,
+    loadPresentation,
   };
 });

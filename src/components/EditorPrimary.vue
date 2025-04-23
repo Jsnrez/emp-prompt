@@ -76,6 +76,19 @@ function handleRemoveSlide(slideId) {
 }
 provide('editorRemoveSlide', handleRemoveSlide)
 
+function handleSavePresentation() {
+  const inputStr="demo";
+  
+  store.savePresentation(inputStr)
+}
+provide('editorSavePresentation', handleSavePresentation)
+
+function handleLoadPresentation() {
+  // TODO: Expand
+  store.loadPresentation()
+}
+provide('editorLoadPresentation', handleLoadPresentation)
+
 </script>
 
 <template>

@@ -5,6 +5,8 @@ import SimButton from './SimButton.vue'
 const _handleAddElement = inject('editorAddElement');
 const _handleCreateNewSlide = inject('editorCreateSlide');
 const _handleDeleteSlide = inject('editorRemoveSlide');
+const _handleSavePresentation = inject('editorSavePresentation');
+const _handleLoadPresentation = inject('editorLoadPresentation');
 
 </script>
 
@@ -17,6 +19,8 @@ const _handleDeleteSlide = inject('editorRemoveSlide');
             <div class="w-full text-center text-white title">Slides</div>
             <SimButton @click="_handleCreateNewSlide" class="flex" title="Create New Slide"><span class="material-icons">library_add</span></SimButton>
             <SimButton @click="_handleDeleteSlide" title="Delete Current Slide"><span class="material-icons">delete_forever</span></SimButton>
+            <SimButton @click="_handleSavePresentation" title="Save Presentation"><span class="material-icons">download</span></SimButton>
+            <SimButton @click="_handleLoadPresentation" title="Load Saved Presentation"><span class="material-icons">upload</span></SimButton>
         </section>
         <section class="flex slide-buttons flex-wrap justify-center align-middle pl-4">
             <div class="w-full text-center text-white title">Elements</div>

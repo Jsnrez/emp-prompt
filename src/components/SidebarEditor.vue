@@ -55,7 +55,7 @@ function deleteElement() {
       <hr />
 
       <div v-if="selectedElement.type === 'text'">
-        <label>Markdown Content:</label>
+        <label>Markdown Content: <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"><sup title="Need Help with Markdown?" class="material-icons text-gray-500" style="font-size: 1.2em;">help</sup></a></label>
         <textarea :value="selectedElement.content" @input="updateElement('content', $event.target.value)"
           rows="10"></textarea>
       </div>
