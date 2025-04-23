@@ -31,6 +31,8 @@ hr {
 .main-content {
   grid-area: main;
   background-color: #fff;
+  border: solid #ccc;
+  border-width: 1px 1px 0 1px;
 }
 
 .mar-right {

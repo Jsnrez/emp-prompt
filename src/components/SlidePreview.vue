@@ -44,10 +44,8 @@ function handleElementPositionUpdate(payload) {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-  border: 1px solid #ccc;
   background-color: #f8f8f8;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 </style>

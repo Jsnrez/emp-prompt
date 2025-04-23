@@ -157,16 +157,13 @@ export const usePresentationStore = defineStore("presentation", () => {
   }
 
   // Deletes a slide by ID - TODO: Expand on delete UI
-  function deleteSlide(slideId) {
+  function deleteSlide(slideId = currentSlideId.value) {
     const slideIndex = slides.value.findIndex((s) => s.id === slideId);
 
     // Remove Slide from data
-    slides.value = slides.value.filter((s) => s.id !== slideId);
+    slides.value = slides.value.slice(0, slideIndex);
 
-    currentSlideId.value =
-      slides.value.length === 0
-        ? null
-        : slides.value[Math.min(slideIndex, slides.value.length - 1)].id;
+    currentSlideId.value = null;
   }
 
   return {

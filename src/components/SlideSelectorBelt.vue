@@ -100,7 +100,8 @@ const setSlideForEditor = inject('editorSetSlide');
     gap: 15px;
     padding: 10px;
     background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    border: solid #ccc;
+    border-width: 1px 0 1px 0;
     min-height: 90px;
     align-items: flex-start;
 }

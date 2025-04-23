@@ -18,9 +18,6 @@ const props = defineProps({
 const emit = defineEmits(['select-element', 'update-element-position']);
 
 const isDragging = ref(false); // Track dragging state locally for cursor style
-
-// --- Dragging State ---
-// We don't store position locally; we rely on props and emit updates
 let dragStartX = 0;
 let dragStartY = 0;
 let initialMouseX = 0;

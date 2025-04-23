@@ -2,7 +2,6 @@
 import { ref, computed, provide } from 'vue';
 import SlidePreview from './SlidePreview.vue';
 import SidebarEditor from './SidebarEditor.vue';
-import SimButton from './SimButton.vue'
 import EditorToolbar from './EditorToolbar.vue';
 import { usePresentationStore } from '../stores/presentationStore.js'
 import SlideSelectorBelt from './SlideSelectorBelt.vue'

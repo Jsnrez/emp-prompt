@@ -1,7 +1,7 @@
 <script></script>
 
 <template>
-    <button class="bg-purple-700 hover:bg-purple-500 text-white px-2.5 py-1 my-buttons" type="button">
+    <button class="bg-violet-800 hover:bg-violet-700 text-white px-2.5 py-1 my-buttons" type="button">
         <slot></slot>
     </button>
 </template>
