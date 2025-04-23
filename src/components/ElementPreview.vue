@@ -101,7 +101,7 @@ const onMouseUp = () => {
 <template>
     <div :style="elementStyle" @mousedown.stop="onMouseDown">
         <img v-if="element.type === 'image'" :src="element.src" class="preview-el p-5px" draggable="false" />
-        <div v-else-if="element.type === 'text'" v-html="renderedHtml" class="preview-el text-box object-contain"
+        <div v-else-if="element.type === 'text'" v-html="renderedHtml" class="preview-el text-box object-contain prose"
             style="width: 100%; height: 100%; pointer-events: none;"></div>
     </div>
 </template>

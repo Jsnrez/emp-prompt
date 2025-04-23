@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Markdown Styles - class="prose" */
+@plugin '@tailwindcss/typography';
 
 hr {
   margin: 15px 0;
