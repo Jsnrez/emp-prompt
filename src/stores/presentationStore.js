@@ -174,7 +174,6 @@ export const usePresentationStore = defineStore("presentation", () => {
       const a = document.createElement("a");
 
       a.href = url;
-      console.log(fileName)
       a.download = fileName;
       document.body.appendChild(a);
       a.click();
@@ -185,13 +184,15 @@ export const usePresentationStore = defineStore("presentation", () => {
     } catch (error) {
       console.error("Error saving presentation:", error);
       alert("Error saving presentation");
-      
     }
   }
 
   function loadPresentation(file) {
-    //JSON
-    console.log(file);
+    // File has been verified by this step
+    // TODO: Consider Extra Validation here, presentation array, slide object, and element objects(.every()).
+    currentSlideId.value = null;
+    slides.value = structuredClone(file);
+    currentSlideId.value = slides.value[0].id
   }
 
   return {

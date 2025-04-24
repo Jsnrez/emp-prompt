@@ -3,8 +3,8 @@ import { ref, computed, provide } from 'vue';
 import SlidePreview from './SlidePreview.vue';
 import SidebarEditor from './SidebarEditor.vue';
 import EditorToolbar from './EditorToolbar.vue';
-import { usePresentationStore } from '../stores/presentationStore.js'
-import SlideSelectorBelt from './SlideSelectorBelt.vue'
+import { usePresentationStore } from '../stores/presentationStore.js';
+import SlideSelectorBelt from './SlideSelectorBelt.vue';
 
 //Store for managing entire presentation
 const store = usePresentationStore();
@@ -77,15 +77,14 @@ function handleRemoveSlide(slideId) {
 provide('editorRemoveSlide', handleRemoveSlide)
 
 function handleSavePresentation() {
-  const inputStr="demo";
-  
+  const inputStr = "windowPresentation";
+
   store.savePresentation(inputStr)
 }
 provide('editorSavePresentation', handleSavePresentation)
 
-function handleLoadPresentation() {
-  // TODO: Expand
-  store.loadPresentation()
+function handleLoadPresentation(inputJson) {
+  store.loadPresentation(inputJson)
 }
 provide('editorLoadPresentation', handleLoadPresentation)
 

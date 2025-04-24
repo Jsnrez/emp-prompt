@@ -1,5 +1,5 @@
 <script setup>
-import SimButton from './SimButton.vue';
+import ConfirmButton from './ConfirmButton.vue';
 
 
 const props = defineProps({
@@ -25,11 +25,8 @@ function updateElement(property, value) {
 }
 
 function deleteElement() {
-  // TODO: Add a custom modal element for confirmation
   if (!props.selectedElement) return;
-  if (confirm('Are you sure you want to delete this element?')) {
-    emit('delete-element', props.selectedElement.id);
-  }
+  emit('delete-element', props.selectedElement.id);
 }
 
 </script>
@@ -69,7 +66,7 @@ function deleteElement() {
 
       <hr />
 
-      <SimButton @click="deleteElement" class="bg-red-600 hover:bg-red-400" color="red">Delete Element</SimButton>
+      <ConfirmButton @confirm="deleteElement">Delete Element</ConfirmButton>
 
     </div>
     <div v-else>
