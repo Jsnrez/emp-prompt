@@ -17,7 +17,7 @@ export const usePresentationStore = defineStore("presentation", () => {
         {
           id: "1",
           type: "text",
-          content: "# Click me to \n\nedit.",
+          content: "# Slide 1",
           x: 50,
           y: 50,
           width: 300,
@@ -40,7 +40,7 @@ export const usePresentationStore = defineStore("presentation", () => {
         {
           id: "1",
           type: "text",
-          content: "# Click me to \n\nedit.",
+          content: "# Slide 2",
           x: 50,
           y: 50,
           width: 300,
@@ -60,6 +60,14 @@ export const usePresentationStore = defineStore("presentation", () => {
   ]);
 
   const currentSlideId = ref("1");
+  // For Presentation Mode 
+  // const currentSlideIndex = ref(0);
+  const currentSlideIndex = computed(() => {
+    return slides.value.findIndex((s) => s.id === currentSlideId.value);
+
+  })
+
+  const totalSlides = computed(() => slides.value.length);
 
   /**
    * Slide Getters
@@ -180,7 +188,6 @@ export const usePresentationStore = defineStore("presentation", () => {
       /// Clean up
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      console.log("Presentation saved successfully as", fileName);
     } catch (error) {
       console.error("Error saving presentation:", error);
       alert("Error saving presentation");
@@ -195,11 +202,41 @@ export const usePresentationStore = defineStore("presentation", () => {
     currentSlideId.value = slides.value[0].id
   }
 
+
+  /**
+   * Presentation Methods
+   */
+
+  function nextSlide() {
+    console.log('hit methods')
+    if (currentSlideIndex.value < totalSlides.value - 1) {
+      // currentSlideIndex.value++;
+      currentSlideId.value = slides.value[currentSlideIndex.value + 1].id;
+    }
+  }
+
+  function previousSlide() {
+    console.log('hit methods')
+    console.log(currentSlideIndex.value)
+    if (currentSlideIndex.value > 0) {
+      console.log('inside if')
+      currentSlideId.value = slides.value[currentSlideIndex.value - 1].id;
+    }
+  }
+
+  
+
+  const progressText = computed(() => {
+    if (totalSlides.value === 0) return '0 / 0';
+    return `${currentSlideIndex.value + 1} / ${totalSlides.value}`;
+  });
+
   return {
     addSlide,
     currentSlide,
     currentSlideElements,
     currentSlideId,
+    currentSlideIndex,
     addElement,
     updateElement,
     deleteElement,
@@ -207,5 +244,8 @@ export const usePresentationStore = defineStore("presentation", () => {
     deleteSlide,
     savePresentation,
     loadPresentation,
+    nextSlide,
+    previousSlide,
+    progressText,
   };
 });

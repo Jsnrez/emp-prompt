@@ -1,6 +1,7 @@
 <script setup>
 import { ref, inject } from 'vue';
 import SimButton from './SimButton.vue'
+import FullscreenPresenter from './FullscreenPresenter.vue';
 
 const _handleAddElement = inject('editorAddElement');
 const _handleCreateNewSlide = inject('editorCreateSlide');
@@ -86,6 +87,9 @@ function handleFileSelected(event) {
             <SimButton @click="_handleAddElement('text')" title="Add Text Field"><span class="material-icons">text_fields</span></SimButton>
             <SimButton @click="_handleAddElement('image')" title="Add Image"><span class="material-icons">image</span></SimButton>
         </section>
+        <section class="ml-auto flex items-center">
+            <FullscreenPresenter class="mr-1"></FullscreenPresenter>
+        </section>
         <input type="file" id="fileInput" accept=".json" ref="fileInput" class="hidden" @change="handleFileSelected">
     </div>
 </template>
@@ -94,6 +98,7 @@ function handleFileSelected(event) {
 .toolbar {
     display: flex;
     border-bottom: 1px solid #ccc;
+    flex-direction: row;
 }
 
 .toolbar button {
