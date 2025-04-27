@@ -1,0 +1,126 @@
+[
+  {
+    "id": "1",
+    "elements": [
+      {
+        "id": "1",
+        "type": "text",
+        "content": "# Window\n\n### Almost PowerPoint",
+        "x": 601,
+        "y": 289,
+        "width": 300,
+        "height": 100
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "elements": [
+      {
+        "id": "1",
+        "type": "text",
+        "content": "# Overview",
+        "x": 578,
+        "y": 28,
+        "width": 300,
+        "height": 100
+      },
+      {
+        "id": "2025-04-27T20:10:42.171Z",
+        "type": "text",
+        "x": 449,
+        "y": 237,
+        "width": 550,
+        "height": 50,
+        "content": "I did use Tailwind for browser resets and for it's simple css approach. I felt that this library did allow me to move quicker while still demonstrating my knowledge of css.  \nAs it does not provide components or major assets like toolbars.  \n(Those assets area available only in their premium libraries)\n\nI also used Marked for rendering the markdown.\n"
+      },
+      {
+        "id": "2025-04-27T20:15:41.012Z",
+        "type": "text",
+        "x": 562,
+        "y": 89,
+        "width": 325,
+        "height": 50,
+        "content": "Code Submission For Jason Perez"
+      },
+      {
+        "id": "2025-04-27T20:16:58.895Z",
+        "type": "text",
+        "x": 523,
+        "y": 167,
+        "width": 400,
+        "height": 50,
+        "content": "**Built with Vue & Pinia for State Management**"
+      }
+    ]
+  },
+  {
+    "id": "2025-04-27T20:21:25.330Z",
+    "elements": [
+      {
+        "id": "2025-04-27T20:26:23.774Z",
+        "type": "text",
+        "x": 463,
+        "y": 41,
+        "width": 600,
+        "height": 50,
+        "content": "# File Breakdown"
+      },
+      {
+        "id": "2025-04-27T20:26:56.523Z",
+        "type": "text",
+        "x": 422,
+        "y": 175,
+        "width": 800,
+        "height": 50,
+        "content": "**EditorPrimary.vue** - The main component for the slide editor. This orchestrates editing functions between the children and the pinia store. Any editing functions are imported here and handled by provide/inject to children or by \n event handlers.  \nSupported by EditorToolbar.vue\n\n**EditorToolbar.vue** - Provides functions like creating new elements, adding new slides, and handling saves.\n\n**useFullscreenPresentation.js** - Composable file which contains all the logic for entering, exiting, and rendering the slideshow to fullscreen. **Separated out this code so other files would not be overcrowded**\n\n**presentationStore.js** - For my app the state is the presentation(or slideshow).\n**Presentations** are made up of **slides**, **slides** have an array of **elements.**  \npresentation > slide > elements"
+      }
+    ]
+  },
+  {
+    "id": "2025-04-27T20:21:27.656Z",
+    "elements": [
+      {
+        "id": "2025-04-27T22:16:00.894Z",
+        "type": "text",
+        "x": 553,
+        "y": 42,
+        "width": 400,
+        "height": 50,
+        "content": "# Considerations"
+      },
+      {
+        "id": "2025-04-27T22:16:27.094Z",
+        "type": "text",
+        "x": 407,
+        "y": 225,
+        "width": 800,
+        "height": 50,
+        "content": "**Handling Images** - For now I handled image hosting by not handling it. I decided to let my users host their own images. If I were to invest more in this app I would consider enabling access to a user's google drive / photos through a google api key.\n\n\n**File Structure** - I put everything below EditorPrimary so that expanding app.vue with common features such as a login page would not require moving the files. Making for a cleaner git history."
+      }
+    ]
+  },
+  {
+    "id": "2025-04-27T22:17:56.028Z",
+    "elements": [
+      {
+        "id": "2025-04-27T22:18:03.527Z",
+        "type": "text",
+        "x": 589,
+        "y": 47,
+        "width": 300,
+        "height": 50,
+        "content": "# Enhancement Ideas"
+      },
+      {
+        "id": "2025-04-27T22:19:08.067Z",
+        "type": "text",
+        "x": 495,
+        "y": 221,
+        "width": 500,
+        "height": 50,
+        "content": " Consider changing the update slide function. To be a save action and maybe keep a json history of changes in local storage. This would allow for Undo / Redo (Ctrl+Z / Shift+Ctrl+Z) \n\n\nNote: I'm Working on the solution for Relative Pixel Sizing for element placement. It's my first drag & drop editor. "
+      }
+    ]
+  }
+]
